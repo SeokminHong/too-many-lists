@@ -1,4 +1,3 @@
-use std::mem;
 use std::ptr;
 
 pub struct List<T> {
@@ -93,7 +92,7 @@ impl<T> List<T> {
                 Some(self.head.take().unwrap().elem)
             } else {
                 let new_tail = unsafe { &mut *prev };
-                let old_tail = mem::replace(&mut new_tail.next, None);
+                let old_tail = new_tail.next.take();
                 self.tail = new_tail;
 
                 Some(old_tail.unwrap().elem)
